@@ -1,12 +1,16 @@
 ﻿using DesignPatterns.AdapterPattern;
 using DesignPatterns.AdapterPatternExercise;
+using DesignPatterns.CommandPattern;
 using DesignPatterns.CompositePattern;
 using DesignPatterns.CompositePatternExercise;
 using DesignPatterns.DecoratorPattern;
 using DesignPatterns.FacadePattern;
 using DesignPatterns.FactoryPattern;
+using DesignPatterns.ObserverPattern;
 using DesignPatterns.ProxyPatttern;
 using DesignPatterns.SingletonPattern;
+using DesignPatterns.StatePattern;
+using DesignPatterns.TemplateMethodPattern;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -26,6 +30,10 @@ namespace DesignPatterns
             CompositeExercise();
             ProxyExample();
             DecoratorExample();
+            TemplateMethodExample();
+            StateExample();
+            CommandExample();
+            ObserverExample();
         }
 
         public static void SingletonExample()
@@ -164,6 +172,42 @@ namespace DesignPatterns
             circle.Draw();
             redCircle.Draw();
             redRectangle.Draw();
+        }
+
+        public static void TemplateMethodExample()
+        {
+            SpaghettiMeatballs spaghettiMeatballs = new SpaghettiMeatballs();
+            spaghettiMeatballs.MakeRecipe();
+            PenneAlfredo penneAlfredo = new PenneAlfredo();
+            penneAlfredo.MakeRecipe();
+        }
+
+        public static void StateExample()
+        {
+            VendingMachine vendingMachine = new VendingMachine(1);
+            vendingMachine.InsertDollar();
+            vendingMachine.Dispense();
+        }
+
+        public static void CommandExample()
+        {
+            Stock abcStock = new Stock();
+            BuyStock buyStockOrder = new BuyStock(abcStock);
+            SellStock sellStockOrder = new SellStock(abcStock);
+            Broker broker = new Broker();
+            broker.TakeOrder(buyStockOrder);
+            broker.TakeOrder(sellStockOrder);
+            broker.PlaceOrders();
+        }
+
+        public static void ObserverExample()
+        {
+            Subscriber subOne = new Subscriber();
+            Subscriber subTwo = new Subscriber();
+            Subject subject = new Subject();
+            subject.RegisterObserver(subOne);
+            subject.RegisterObserver(subTwo);
+            subject.Notify();
         }
     }
 }
